@@ -6,23 +6,68 @@ import {
   UPDATE_USER,
   DELETE_USER,
   SET_SEARCH_TERM,
+  DELETE_MESSAGE,
+  SEND_MESSAGE,
+  ADD_CONTACT,
+  DELETE_CONTACT,
+  SET_LOADING,
 } from "./types";
 import { generateRandomId } from "../utils";
 
 export function reducer(state = getItem("store") || initialState, action) {
   switch (action.type) {
-    case SET_SCREEN_MODE: {
-      const newState = { ...state, screenMode: action.payload };
+    case DELETE_CONTACT: {
+      //defensive check
+      if (!user.friends) return state;
+
+      const user = { ...state.user };
+
+      const indexOfFriend = user.friends.findIndex(
+        (item) => item.id === action.payload.id
+      );
+
+      user.friends.splice(indexOfFriend, 1);
+
+      const newState = { ...state, user };
 
       storeItem("store", newState);
 
       return newState;
     }
 
+    case ADD_CONTACT: {
+      const user = { ...state.user };
+
+      const friends = user.friends ? user.friends : [];
+
+      friends.push(action.payload);
+
+      user.friends = friends;
+
+      const newState = { ...state, user };
+
+      storeItem("store", newState);
+
+      return newState;
+    }
+
+    case SET_SCREEN_MODE: {
+      const newState = { ...state, screenMode: action.payload, loading: false };
+
+      storeItem("store", newState);
+
+      return newState;
+    }
+
+    case SET_LOADING:
+      const newState = { ...state, loading: action.payload };
+
+      return newState;
+
     case ADD_USER: {
       const user = {
         id: generateRandomId(64),
-        userName: action.payload.userName,
+        userName: action.payload,
       };
 
       const newState = { ...state, user };
@@ -54,6 +99,36 @@ export function reducer(state = getItem("store") || initialState, action) {
 
     case SET_SEARCH_TERM: {
       const newState = { ...state, searchTerm: action.payload };
+
+      return newState;
+    }
+
+    case DELETE_MESSAGE: {
+      const messages = [...state.messages];
+
+      const indexOfMessage = messages.findIndex(
+        (item) => item.id === action.payload
+      );
+
+      messages.splice(indexOfMessage, 1);
+
+      return { ...state, messages };
+    }
+
+    case SEND_MESSAGE: {
+      const messages = [...state.messages];
+
+      messages.push({
+        id: generateRandomId(64),
+        fromId: state.currentUserId,
+        toId: action.payload.toId,
+        content: action.payload.content,
+        sendDate: Date.now(),
+      });
+
+      const newState = { ...state, messages };
+
+      storeItem("store", newState);
 
       return newState;
     }

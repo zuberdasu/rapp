@@ -1,27 +1,21 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { ADD_USER } from "./redux/types";
+import React, { useEffect } from "react";
+import Startup from "./components/Startup";
+import Interface from "./components/Interface";
+import { useSelector, useDispatch } from "react-redux";
+import { SET_LOADING } from "./redux/types";
 
 const App = () => {
-  const [message, setMessage] = useState("");
+  const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: SET_LOADING, payload: true });
+  }, []);
 
   return (
     <>
       <button onClick={() => localStorage.clear()}>Clear localStorage</button>
-      <input
-        onInput={(e) => {
-          setMessage(e.target.value);
-        }}
-        type="text"
-      />
-      <button
-        onClick={() => {
-          dispatch({ type: ADD_USER, payload: { userName: "Bobby xxi" } });
-        }}
-      >
-        Add
-      </button>
+      {loading ? <Startup /> : <Interface />}
     </>
   );
 };
