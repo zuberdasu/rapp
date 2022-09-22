@@ -40,6 +40,11 @@ export function reducer(state = getItem("store") || initialState, action) {
 
       const friends = user.friends ? user.friends : [];
 
+      //check if already a friend, if so return with no change
+      if (friends.includes(action.payload)) {
+        return state;
+      }
+
       friends.push(action.payload);
 
       user.friends = friends;
