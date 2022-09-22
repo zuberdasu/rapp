@@ -9,19 +9,19 @@ const Naviation = () => {
   return (
     <nav>
       {screenMode !== 2 && (
-        <button onClick={() => dispatch({ type: SET_SCREEN_MODE, payload: 1 })}>
+        <button onClick={() => dispatch({ type: SET_SCREEN_MODE, payload: 2 })}>
           Contacts
         </button>
       )}
 
       {screenMode !== 3 && (
-        <button onClick={() => dispatch({ type: SET_SCREEN_MODE, payload: 2 })}>
+        <button onClick={() => dispatch({ type: SET_SCREEN_MODE, payload: 3 })}>
           Messaging
         </button>
       )}
 
       {screenMode !== 4 && (
-        <button onClick={() => dispatch({ type: SET_SCREEN_MODE, payload: 3 })}>
+        <button onClick={() => dispatch({ type: SET_SCREEN_MODE, payload: 4 })}>
           Search
         </button>
       )}

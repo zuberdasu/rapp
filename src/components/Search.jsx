@@ -23,7 +23,11 @@ const Search = () => {
       Search
       <Naviation />
       <SearchBar setSearchTerm={setSearchTerm} />
-      <Results results={results} />
+      {results.length > 0 ? (
+        <Results results={results} />
+      ) : (
+        <p>Sorry, no friends found</p>
+      )}
     </>
   );
 };

@@ -16,6 +16,13 @@ const App = () => {
     setLoading(false);
   };
 
+  //after two seconds set loading to false
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
   return (
     <>
       <button onClick={() => localStorage.clear()}>Clear localStorage</button>
