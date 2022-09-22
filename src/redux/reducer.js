@@ -59,18 +59,13 @@ export function reducer(state = getItem("store") || initialState, action) {
       return newState;
     }
 
-    case SET_LOADING:
-      const newState = { ...state, loading: action.payload };
-
-      return newState;
-
     case ADD_USER: {
       const user = {
         id: generateRandomId(64),
         userName: action.payload,
       };
 
-      const newState = { ...state, user };
+      const newState = { ...state, user, screenMode: 4 };
 
       storeItem("store", newState);
 
