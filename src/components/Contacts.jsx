@@ -14,7 +14,9 @@ const Contacts = () => {
             user.friends.includes(potentialFriend.id) &&
             !user.blocked.includes(potentialFriend.id)
           ) {
-            return <h1>{potentialFriend.userName}</h1>;
+            return (
+              <h1 key={potentialFriend.userName}>{potentialFriend.userName}</h1>
+            );
           } else {
             return false;
           }
