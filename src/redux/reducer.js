@@ -68,6 +68,7 @@ export function reducer(state = getItem("store") || initialState, action) {
       const user = {
         id: generateRandomId(64),
         userName: action.payload,
+        blocked: [2],
       };
 
       const newState = { ...state, user, screenMode: 4 };
